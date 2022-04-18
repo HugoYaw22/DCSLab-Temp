@@ -2,52 +2,68 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-
+use App\Models\Cash;
 use App\Models\Company;
-use App\Models\Expense;
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Customer;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
-
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Branch extends Model
+class CustomerGroup extends Model
 {
     use HasFactory, LogsActivity;
     use SoftDeletes;
-
+    
     protected $fillable = [
-        'company_id',
         'code',
         'name',
-        'address',
-        'city',
-        'contact',
+        'max_open_invoice',
+        'max_outstanding_invoice',
+        'max_invoice_age',
+        'payment_term',
+        'selling_point',
+        'selling_point_multiple',
+        'sell_at_cost',
+        'price_markup_percent',
+        'price_markup_nominal',
+        'price_markdown_percent',
+        'price_markdown_nominal',
+        'round_on',
+        'round_digit',
         'remarks',
-        'status'
+        'cash_id'
     ];
 
     protected static $logAttributes = [
-        'company_id',
         'code',
         'name',
-        'address',
-        'city',
-        'contact',
+        'max_open_invoice',
+        'max_outstanding_invoice',
+        'max_invoice_age',
+        'payment_term',
+        'selling_point',
+        'selling_point_multiple',
+        'sell_at_cost',
+        'price_markup_percent',
+        'price_markup_nominal',
+        'price_markdown_percent',
+        'price_markdown_nominal',
+        'round_on',
+        'round_digit',
         'remarks',
-        'status'
+        'cash_id'
     ];
 
     protected static $logOnlyDirty = true;
 
     protected $hidden = [
         'id',
-        'company_id',
+        'cash_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -63,14 +79,19 @@ class Branch extends Model
         );
     }
 
+    public function cash()
+    {
+        return $this->belongsTo(Cash::class);
+    }
+
+    public function customerGroup()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
-    }
-        
-    public function expenses()
-    {
-        return $this->hasMany(Expense::class);
     }
 
     public function getActivitylogOptions(): LogOptions

@@ -2,52 +2,60 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\Company;
-use App\Models\Expense;
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\CustomerGroup;
+use App\Models\CustomerAddress;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
-
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Branch extends Model
+class Customer extends Model
 {
     use HasFactory, LogsActivity;
     use SoftDeletes;
-
+    
     protected $fillable = [
-        'company_id',
         'code',
         'name',
+        'is_member',
+        'customer_group_id',
+        'zone',
+        'max_open_invoice',
+        'max_outstanding_invoice',
+        'max_invoice_age',
+        'payment_term',
         'address',
-        'city',
-        'contact',
+        'tax_id',
         'remarks',
-        'status'
+        'status',
     ];
 
     protected static $logAttributes = [
-        'company_id',
         'code',
         'name',
+        'is_member',
+        'customer_group_id',
+        'zone',
+        'max_open_invoice',
+        'max_outstanding_invoice',
+        'max_invoice_age',
+        'payment_term',
         'address',
-        'city',
-        'contact',
+        'tax_id',
         'remarks',
-        'status'
+        'status',
     ];
 
     protected static $logOnlyDirty = true;
 
     protected $hidden = [
         'id',
-        'company_id',
+        'customer_group_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -67,10 +75,15 @@ class Branch extends Model
     {
         return $this->belongsTo(Company::class);
     }
-        
-    public function expenses()
+
+    public function customerGroup()
     {
-        return $this->hasMany(Expense::class);
+        return $this->belongsTo(CustomerGroup::class);
+    }
+
+    public function customerAddress()
+    {
+        return $this->hasMany(CustomerAddress::class);
     }
 
     public function getActivitylogOptions(): LogOptions
