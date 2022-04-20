@@ -2,52 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-
+use App\Models\Capital;
 use App\Models\Company;
-use App\Models\Expense;
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
-
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Branch extends Model
+class CapitalGroup extends Model
 {
     use HasFactory, LogsActivity;
     use SoftDeletes;
-
+    
     protected $fillable = [
-        'company_id',
         'code',
-        'name',
-        'address',
-        'city',
-        'contact',
-        'remarks',
-        'status'
+        'name'
     ];
 
-    protected static $logAttributes = [
-        'company_id',
-        'code',
-        'name',
-        'address',
-        'city',
-        'contact',
-        'remarks',
-        'status'
-    ];
+    protected static $logAttributes = ['code', 'name'];
 
     protected static $logOnlyDirty = true;
 
     protected $hidden = [
         'id',
-        'company_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -67,10 +48,10 @@ class Branch extends Model
     {
         return $this->belongsTo(Company::class);
     }
-        
-    public function expenses()
+
+    public function capitals()
     {
-        return $this->hasMany(Expense::class);
+        return $this->hasMany(Capital::class);
     }
 
     public function getActivitylogOptions(): LogOptions

@@ -2,52 +2,55 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Cash;
+use App\Models\Company;
+use App\Models\Investor;
+
+use App\Models\CapitalGroup;
+use Spatie\Activitylog\LogOptions;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Company;
-use App\Models\Expense;
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-use Vinkla\Hashids\Facades\Hashids;
-
-class Branch extends Model
+class Capital extends Model
 {
     use HasFactory, LogsActivity;
     use SoftDeletes;
 
     protected $fillable = [
-        'company_id',
-        'code',
-        'name',
-        'address',
-        'city',
-        'contact',
+        'investor_id',
+        'group_id',
+        'cash_id',
+        'ref_number',
+        'date',
+        'capital_status',
+        'amount',
         'remarks',
-        'status'
     ];
 
     protected static $logAttributes = [
-        'company_id',
-        'code',
-        'name',
-        'address',
-        'city',
-        'contact',
+        'investor_id',
+        'group_id',
+        'cash_id',
+        'ref_number',
+        'date',
+        'capital_status',
+        'amount',
         'remarks',
-        'status'
     ];
 
     protected static $logOnlyDirty = true;
 
     protected $hidden = [
         'id',
-        'company_id',
+        'investor_id',
+        'group_id',
+        'cash_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -67,10 +70,20 @@ class Branch extends Model
     {
         return $this->belongsTo(Company::class);
     }
-        
-    public function expenses()
+
+    public function investor()
     {
-        return $this->hasMany(Expense::class);
+        return $this->belongsTo(Investor::class);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(CapitalGroup::class);
+    }
+
+    public function cash()
+    {
+        return $this->belongsTo(Cash::class);
     }
 
     public function getActivitylogOptions(): LogOptions

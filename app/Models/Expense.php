@@ -2,52 +2,57 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-
+use App\Models\Cash;
+use App\Models\Branch;
 use App\Models\Company;
-use App\Models\Expense;
-
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\ExpenseGroup;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
-
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Branch extends Model
+class Expense extends Model
 {
     use HasFactory, LogsActivity;
     use SoftDeletes;
-
+    
     protected $fillable = [
-        'company_id',
+        'branch_id',
+        'expense_group_id',
+        'cash_id',
         'code',
-        'name',
-        'address',
-        'city',
-        'contact',
+        'date',
+        'payment_term_type',
+        'amount',
+        'amount_owed',
         'remarks',
-        'status'
+        'posted'
     ];
 
     protected static $logAttributes = [
-        'company_id',
+        'branch_id',
+        'expense_group_id',
+        'cash_id',
         'code',
-        'name',
-        'address',
-        'city',
-        'contact',
+        'date',
+        'payment_term_type',
+        'amount',
+        'amount_owed',
         'remarks',
-        'status'
+        'posted'
     ];
-
+    
     protected static $logOnlyDirty = true;
 
     protected $hidden = [
         'id',
-        'company_id',
+        'branch_id',
+        'expense_group_id',
+        'cash_id',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -67,10 +72,20 @@ class Branch extends Model
     {
         return $this->belongsTo(Company::class);
     }
-        
-    public function expenses()
+
+    public function branch()
     {
-        return $this->hasMany(Expense::class);
+        return $this->belongsTo(Branch::class);
+    }
+    
+    public function expenseGroup()
+    {
+        return $this->belongsTo(ExpenseGroup::class);
+    }
+    
+    public function cash()
+    {
+        return $this->belongsTo(Cash::class);
     }
 
     public function getActivitylogOptions(): LogOptions
