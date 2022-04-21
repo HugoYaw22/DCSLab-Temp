@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Vinkla\Hashids\Facades\Hashids;
 
-class BranchRequest extends FormRequest
+class CapitalGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,6 @@ class BranchRequest extends FormRequest
      */
     public function rules()
     {
-        $investorId = $this->has('investor_id') ? Hashids::decode($this['investor_id'])[0]:null;
-        $groupId = $this->has('group_id') ? Hashids::decode($this['group_id'])[0]:null;
-        $cashId = $this->has('cash_id') ? Hashids::decode($this['cash_id'])[0]:null;
 
         $nullableArr = [
             'date' => 'nullable',

@@ -58,8 +58,8 @@
                                     <div class="flex flex-row">
                                         <div class="ml-5 w-48 text-right pr-5">{{ t('views.user.fields.status') }}</div>
                                         <div class="flex-1">
-                                            <span v-if="item.profile.status === 1">{{ t('components.dropdown.values.statusDDL.active') }}</span>
-                                            <span v-if="item.profile.status === 0">{{ t('components.dropdown.values.statusDDL.inactive') }}</span>
+                                            <span v-if="item.profile.status === 'ACTIVE'">{{ t('components.dropdown.values.statusDDL.active') }}</span>
+                                            <span v-if="item.profile.status === 'INACTIVE'">{{ t('components.dropdown.values.statusDDL.inactive') }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -250,11 +250,9 @@ import dom from "@left4code/tw-starter/dist/js/dom";
 import DataList from "@/global-components/data-list/Main"
 import AlertPlaceholder from "@/global-components/alert-placeholder/Main"
 //#endregion
-
 //#region Declarations
 const { t } = useI18n();
 //#endregion
-
 //#region  Data - UI
 const mode = ref('list');
 const loading = ref(false);
@@ -263,14 +261,13 @@ const deleteId = ref('');
 const deleteModalShow = ref(false);
 const expandDetail = ref(null);
 //#endregion
-
 //#region Data - Views
 const user = ref({
     roles: [],
     selected_roles: [],
     profile: {
         country: '',
-        status: 1,
+        status: 'ACTIVE',
         img_path: ''
     },
     selected_settings: {
@@ -284,46 +281,36 @@ const rolesDDL = ref([]);
 const statusDDL = ref([]);
 const countriesDDL = ref([]);
 //#endregion
-
 //#region onMounted
 onMounted(() => {
     getUser({ page: 1 });
     getDDL();
-
     loading.value = false;
 });
 //#endregion
-
 //#region Methods
 const getUser = (args) => {
     userList.value = {};
     if (args.pageSize === undefined) args.pageSize = 10;
     if (args.search === undefined) args.search = '';
-
     axios.get(route('api.get.db.admin.users.read', { "page": args.page, "perPage": args.pageSize, "search": args.search })).then(response => {
         userList.value = response.data;
     });
 }
-
 const getDDL = () => {
     axios.get(route('api.get.db.common.ddl.list.countries')).then(response => {
         countriesDDL.value = response.data;
     });
-
     axios.get(route('api.get.db.common.ddl.list.statuses')).then(response => {
         statusDDL.value = response.data;
     });
-
     axios.get(route('api.get.db.admin.users.roles.read')).then(response => {
         rolesDDL.value = response.data;
     });
 }
-
 const onSubmit = (values, actions) => {
     loading.value = true;
-
     var formData = new FormData(dom('#userForm')[0]); 
-
     if (mode.value === 'create') {
         axios.post(route('api.post.db.admin.users.save'), formData, {
             headers: {
@@ -351,7 +338,6 @@ const onSubmit = (values, actions) => {
         });
     } else { }
 }
-
 const handleError = (e, actions) => {
     //Laravel Validations
     if (e.response.data.errors !== undefined && Object.keys(e.response.data.errors).length > 0) {
@@ -368,15 +354,12 @@ const handleError = (e, actions) => {
         };
     }
 }
-
 const invalidSubmit = (e) => {
     alertErrors.value = e.errors;
 }
-
 const reValidate = (errors) => {
     alertErrors.value = errors;
 }
-
 const emptyUser = () => {
     return {
         roles: [],
@@ -384,7 +367,7 @@ const emptyUser = () => {
         profile: {
             img_path: '',
             country: '',
-            status: 1,
+            status: 'ACTIVE',
         },
         selected_settings: {
             theme: 'side-menu-light-full',
@@ -393,45 +376,36 @@ const emptyUser = () => {
         }
     }
 }
-
 const resetAlertErrors = () => {
     alertErrors.value = [];
 }
-
 const createNew = () => {
     mode.value = 'create';
     user.value = emptyUser();
 }
-
 const onDataListChange = ({page, pageSize, search}) => {
     getUser({page, pageSize, search});
 }
-
 const editSelected = (index) => {
     mode.value = 'edit';
     user.value = userList.value.data[index];
 }
-
 const deleteSelected = (index) => {
     deleteId.value = userList.value.data[index].hId;
     deleteModalShow.value = true;
 }
-
 const confirmDelete = () => {
     deleteModalShow.value = false;
     if (deleteId.value) console.log('Data ' + deleteId.value + ' deleted.');
 }
-
 const showSelected = (index) => {
     toggleDetail(index);
 }
-
 const backToList = () => {
     resetAlertErrors();
     mode.value = 'list';
     getUser({ page: userList.value.current_page, pageSize: userList.value.per_page });
 }
-
 const toggleDetail = (idx) => {
     if (expandDetail.value === idx) {
         expandDetail.value = null;
@@ -439,12 +413,9 @@ const toggleDetail = (idx) => {
         expandDetail.value = idx;
     }
 }
-
 const handleUpload = (e) => {
     const files = e.target.files;
-
     let filename = files[0].name;
-
     const fileReader = new FileReader()
     fileReader.addEventListener('load', () => {
         user.value.profile.img_path = fileReader.result
@@ -452,7 +423,6 @@ const handleUpload = (e) => {
     fileReader.readAsDataURL(files[0])
 }
 //#endregion
-
 //#region Computed
 const retrieveImage = computed(() => {
     if (user.value.profile.img_path && user.value.profile.img_path !== '') {
@@ -466,7 +436,6 @@ const retrieveImage = computed(() => {
     }
 });
 //#endregion
-
 //#region Watcher
 //#endregion
 </script>

@@ -29,13 +29,6 @@ class ExpenseGroupRequest extends FormRequest
     {
         $companyId = $this->has('company_id') ? Hashids::decode($this['company_id'])[0]:null;
 
-        $nullableArr = [
-            'address' => 'nullable',
-            'city' => 'nullable',
-            'contact' => 'nullable',
-            'remarks' => 'nullable',
-        ];
-
         $currentRouteMethod = $this->route()->getActionMethod();
         switch($currentRouteMethod) {
             case 'store':
@@ -43,17 +36,15 @@ class ExpenseGroupRequest extends FormRequest
                     'company_id' => ['required', 'bail'],
                     'code' => ['required', 'max:255', new uniqueCode(table: 'branches', companyId: $companyId)],
                     'name' => 'required|max:255',
-                    'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
                 ];
-                return array_merge($rules_store, $nullableArr);
+                return array_merge($rules_store);
             case 'update':
                 $rules_update = [
                     'company_id' => ['required', 'bail'],
                     'code' => new uniqueCode(table: 'branches', companyId: $companyId, exceptId: $this->route('id')),
                     'name' => 'required|max:255',
-                    'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
                 ];
-                return array_merge($rules_update, $nullableArr);
+                return array_merge($rules_update);
             default:
                 return [
                     '' => 'required'

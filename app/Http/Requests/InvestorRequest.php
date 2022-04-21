@@ -42,15 +42,16 @@ class InvestorRequest extends FormRequest
                 $rules_store = [
                     'company_id' => ['required', 'bail'],
                     'code' => ['required', 'max:255', new uniqueCode(table: 'branches', companyId: $companyId)],
-                    'name' => 'required|max:255',
+                    'name' => 'required|min:3|max:255',
+                    'tax_number' => 'required|integer|digits_between:1,255',
                     'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
                 ];
                 return array_merge($rules_store, $nullableArr);
             case 'update':
                 $rules_update = [
-                    'company_id' => ['required', 'bail'],
                     'code' => new uniqueCode(table: 'branches', companyId: $companyId, exceptId: $this->route('id')),
-                    'name' => 'required|max:255',
+                    'name' => 'required|min:3|max:255',
+                    'tax_number' => 'required|integer|digits_between:1,255',
                     'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
                 ];
                 return array_merge($rules_update, $nullableArr);

@@ -41,9 +41,10 @@ class CapitalRequest extends FormRequest
             case 'store':
                 $rules_store = [
                     'company_id' => ['required', 'bail'],
-                    'code' => ['required', 'max:255', new uniqueCode(table: 'branches', companyId: $companyId)],
-                    'name' => 'required|max:255',
-                    'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
+                    'ref_number' => 'required|integer|digits_between:1,255',
+                    'group_id' => 'required',
+                    'capital_status' => 'required',
+                    'amount' => 'required|integer|digits_between:1,29',
                 ];
                 return array_merge($rules_store, $nullableArr);
             case 'update':
