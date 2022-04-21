@@ -30,10 +30,8 @@ class ExpenseRequest extends FormRequest
         $companyId = $this->has('company_id') ? Hashids::decode($this['company_id'])[0]:null;
 
         $nullableArr = [
-            'address' => 'nullable',
-            'city' => 'nullable',
-            'contact' => 'nullable',
             'remarks' => 'nullable',
+            'posted' => 'nullable',
         ];
 
         $currentRouteMethod = $this->route()->getActionMethod();
@@ -41,17 +39,25 @@ class ExpenseRequest extends FormRequest
             case 'store':
                 $rules_store = [
                     'company_id' => ['required', 'bail'],
+                    'branch_id' => ['required', 'bail'],
+                    'expense_group_id' => ['required', 'bail'],
+                    'cash_id' => ['required', 'bail'],
                     'code' => ['required', 'max:255', new uniqueCode(table: 'branches', companyId: $companyId)],
-                    'name' => 'required|max:255',
-                    'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
+                    'payment_term_type' => 'required|integer|digits_between:1,11',
+                    'amount' => 'required|integer|digits_between:1,19',
+                    'amount_owed' => 'required|integer|digits_between:1,19',
                 ];
                 return array_merge($rules_store, $nullableArr);
             case 'update':
                 $rules_update = [
                     'company_id' => ['required', 'bail'],
+                    'branch_id' => ['required', 'bail'],
+                    'expense_group_id' => ['required', 'bail'],
+                    'cash_id' => ['required', 'bail'],
                     'code' => new uniqueCode(table: 'branches', companyId: $companyId, exceptId: $this->route('id')),
-                    'name' => 'required|max:255',
-                    'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
+                    'payment_term_type' => 'required|integer|digits_between:1,11',
+                    'amount' => 'required|integer|digits_between:1,19',
+                    'amount_owed' => 'required|integer|digits_between:1,19',
                 ];
                 return array_merge($rules_update, $nullableArr);
             default:

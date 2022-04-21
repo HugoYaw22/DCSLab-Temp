@@ -34,23 +34,34 @@ class CustomerRequest extends FormRequest
             'city' => 'nullable',
             'contact' => 'nullable',
             'remarks' => 'nullable',
+            'is_member' => 'nullable',
+            'zone' => 'nullable',
+            'tax_id' => 'nullable',
         ];
 
         $currentRouteMethod = $this->route()->getActionMethod();
         switch($currentRouteMethod) {
             case 'store':
                 $rules_store = [
-                    'company_id' => ['required', 'bail'],
+                    'customer_group_id' => ['required', 'bail'],
                     'code' => ['required', 'max:255', new uniqueCode(table: 'branches', companyId: $companyId)],
-                    'name' => 'required|max:255',
+                    'name' => 'required|min:3|max:255',
+                    'max_open_invoice' => 'required|integer|digits_between:1,11',
+                    'max_outstanding_invoice' => 'required|numeric|min:0|max:999999999999999',
+                    'max_invoice_age' => 'required|integer|digits_between:1,11',
+                    'payment_term' => 'required|integer|digits_between:1,11',
                     'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
                 ];
                 return array_merge($rules_store, $nullableArr);
             case 'update':
                 $rules_update = [
-                    'company_id' => ['required', 'bail'],
+                    'customer_group_id' => ['required', 'bail'],
                     'code' => new uniqueCode(table: 'branches', companyId: $companyId, exceptId: $this->route('id')),
-                    'name' => 'required|max:255',
+                    'name' => 'required|min:3|max:255',
+                    'max_open_invoice' => 'required|integer|digits_between:1,11',
+                    'max_outstanding_invoice' => 'required|numeric|min:0|max:999999999999999',
+                    'max_invoice_age' => 'required|integer|digits_between:1,11',
+                    'payment_term' => 'required|integer|digits_between:1,11',
                     'status' => ['required', new validDropDownValue('ACTIVE_STATUS')]
                 ];
                 return array_merge($rules_update, $nullableArr);
