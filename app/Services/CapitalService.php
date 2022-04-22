@@ -11,10 +11,10 @@ interface CapitalService
         int $investor_id,
         int $group_id,
         int $cash_id,
-        ?int $ref_number,
-        ?string $date,
-        int $capial_status = null,
-        int $amount = null,
+        ?int $ref_number = null,
+        ?string $date = null,
+        int $capial_status,
+        int $amount,
         ?string $remarks = null,
     ): ?Capital;
 
@@ -31,10 +31,10 @@ interface CapitalService
         int $investor_id,
         int $group_id,
         int $cash_id,
-        ?int $ref_number,
-        ?string $date,
-        int $capial_status = null,
-        int $amount = null,
+        ?int $ref_number = null,
+        ?string $date = null,
+        int $capial_status,
+        int $amount,
         ?string $remarks = null,
     ): ?Capital;
 

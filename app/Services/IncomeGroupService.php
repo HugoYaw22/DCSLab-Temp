@@ -10,10 +10,6 @@ interface IncomeGroupService
         int $company_id,
         string $code,
         string $name,
-        ?string $address = null,
-        ?string $city = null,
-        ?string $contact = null,
-        ?string $remarks = null,
         int $status,
     ): ?IncomeGroup;
 
@@ -29,10 +25,6 @@ interface IncomeGroupService
         int $company_id,
         string $code,
         string $name,
-        ?string $address = null,
-        ?string $city = null,
-        ?string $contact = null,
-        ?string $remarks = null,
         int $status,
     ): ?IncomeGroup;
 

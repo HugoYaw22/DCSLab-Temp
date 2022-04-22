@@ -10,10 +10,6 @@ interface ExpenseGroupService
         int $company_id,
         string $code,
         string $name,
-        ?string $address = null,
-        ?string $city = null,
-        ?string $contact = null,
-        ?string $remarks = null,
         int $status,
     ): ?ExpenseGroup;
 
@@ -29,10 +25,6 @@ interface ExpenseGroupService
         int $company_id,
         string $code,
         string $name,
-        ?string $address = null,
-        ?string $city = null,
-        ?string $contact = null,
-        ?string $remarks = null,
         int $status,
     ): ?ExpenseGroup;
 

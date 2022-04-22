@@ -8,13 +8,16 @@ interface ExpenseService
 {
     public function create(
         int $company_id,
+        int $branch_id,
+        int $expense_group_id,
+        ?int $cash_id = null,
         string $code,
-        string $name,
-        ?string $address = null,
-        ?string $city = null,
-        ?string $contact = null,
+        ?string $date = null,
+        string $payment_term_type,
+        string $amount,
+        string $amount_owed,
         ?string $remarks = null,
-        int $status,
+        int $posted,
     ): ?Expense;
 
     public function read(
@@ -27,13 +30,16 @@ interface ExpenseService
     public function update(
         int $id,
         int $company_id,
+        int $branch_id,
+        int $expense_group_id,
+        ?int $cash_id = null,
         string $code,
-        string $name,
-        ?string $address = null,
-        ?string $city = null,
-        ?string $contact = null,
+        ?string $date = null,
+        string $payment_term_type,
+        string $amount,
+        string $amount_owed,
         ?string $remarks = null,
-        int $status,
+        int $posted,
     ): ?Expense;
 
     public function delete(int $id): bool;

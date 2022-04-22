@@ -13,6 +13,7 @@ interface InvestorService
         ?string $address = null,
         ?string $city = null,
         ?string $contact = null,
+        ?string $tax_number = null,
         ?string $remarks = null,
         int $status,
     ): ?Investor;
@@ -32,6 +33,7 @@ interface InvestorService
         ?string $address = null,
         ?string $city = null,
         ?string $contact = null,
+        ?string $tax_number = null,
         ?string $remarks = null,
         int $status,
     ): ?Investor;

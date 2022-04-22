@@ -8,6 +8,7 @@ use Ramsey\Uuid\Type\Decimal;
 interface CustomerGroupService
 {
     public function create(
+        int $company_id,
         int $cash_id,
         string $code,
         string $name,
@@ -35,20 +36,21 @@ interface CustomerGroupService
 
     public function update(
         int $id,
+        int $company_id,
         int $cash_id,
         string $code,
         string $name,
-        int $max_open_invoice = null,
-        int $max_outstanding_invoice = null,
-        int $max_invoice_age = null,
-        int $payment_term = null,
+        int $max_open_invoice,
+        int $max_outstanding_invoice,
+        int $max_invoice_age,
+        int $payment_term,
         int $selling_point,
-        string $selling_point_multiple = null,
+        string $selling_point_multiple,
         ?int $sell_at_cost = null,
-        int $price_markup_percent = null,
-        int $price_markup_nominal = null,
+        int $price_markup_percent,
+        int $price_markup_nominal,
         int $price_markdown_nominal,
-        int $round_on = null,
+        int $round_on,
         ?int $round_digit = null,
         ?int $remarks = null,
     ): ?CustomerGroup;
