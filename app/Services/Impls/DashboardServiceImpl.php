@@ -29,10 +29,11 @@ class DashboardServiceImpl implements DashboardService
 
         if($hasCompany) {
             array_push($menu, $this->createMenu_Product());
+            array_push($menu, $this->createMenu_Cash());
             array_push($menu, $this->createMenu_Supplier());
-            //array_push($menu, $this->createMenu_Customer());
+            array_push($menu, $this->createMenu_Customer());
             array_push($menu, $this->createMenu_PurchaseOrder());
-            //array_push($menu, $this->createMenu_SalesOrder());    
+            //array_push($menu, $this->createMenu_SalesOrder());
         }
 
         if ($usrRoles->where('name', Config::get('const.DEFAULT.ROLE.ADMIN'))->isNotEmpty() || $openAllMenu)
@@ -198,6 +199,69 @@ class DashboardServiceImpl implements DashboardService
         return $root_array; 
     }
 
+    private function createMenu_Cash(): array
+    {
+        $cashes = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-cash',
+            'title' => 'components.menu.cash-cash'
+        );
+
+        $capitals = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-capital-capital',
+            'title' => 'components.menu.cash-capital-capital'
+        );
+
+        $capitalgroups = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-capital-capitalgroup',
+            'title' => 'components.menu.cash-capital-capitalgroup'
+        );
+
+        $expenses = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-expense-expense',
+            'title' => 'components.menu.cash-expense-expense'
+        );
+        
+        $expensegroups = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-expense-expensegroup',
+            'title' => 'components.menu.cash-expense-expensegroup'
+        );
+
+        $incomes = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-income-income',
+            'title' => 'components.menu.cash-income-income'
+        );
+
+        $incomegroups = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-income-incomegroup',
+            'title' => 'components.menu.cash-income-incomegroup'
+        );
+
+        $investors = array(
+            'icon' => '',
+            'pageName' => 'side-menu-cash-employee',
+            'title' => 'components.menu.cash-employee'
+        );
+
+        $root_array = array(
+            'icon' => 'UmbrellaIcon',
+            'pageName' => 'side-menu-cash',
+            'title' => 'components.menu.cash',
+            'subMenu' => [
+            ]
+        );
+
+        array_push($root_array['subMenu'], $cashes, $capitals, $capitalgroups, $expenses, $expensegroups, $incomes, $incomegroups, $investors);
+
+        return $root_array;
+    }
+
     private function createMenu_Supplier(): array
     {
         $supplier = array(
@@ -221,9 +285,29 @@ class DashboardServiceImpl implements DashboardService
 
     private function createMenu_Customer(): array
     {
-        return array(
-
+        $customers = array(
+            'icon' => '',
+            'pageName' => 'side-menu-customer-customer',
+            'title' => 'components.menu.customer-customer'
         );
+
+        $customergroups = array(
+            'icon' => '',
+            'pageName' => 'side-menu-customer-customergroup',
+            'title' => 'components.menu.customer-customergroup'
+        );
+
+        $root_array = array(
+            'icon' => 'PackageIcon',
+            'pageName' => 'side-menu-customer',
+            'title' => 'components.menu.customer',
+            'subMenu' => [
+            ]
+        );
+
+        array_push($root_array['subMenu'], $customers, $customergroups);
+
+        return $root_array;
     }
 
     private function createMenu_PurchaseOrder(): array

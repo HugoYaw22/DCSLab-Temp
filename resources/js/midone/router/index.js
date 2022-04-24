@@ -9,16 +9,20 @@ import RouteDashboard from "./route-dashboard";
 import RouteAdmin from "./route-admin";
 
 import RouteCompany from "./route-company";
+import RouteCash from "./route-cash";
 import RouteSupplier from "./route-supplier";
 import RouteProduct from "./route-product";
+import RouteCustomer from "./route-customer";
 import RoutePurchaseOrder from "./route-purchaseorder";
 import RouteError from "./route-error";
 
 const routes = [
     RouteDashboard,
     RouteCompany,
+    RouteCash,
     RouteSupplier,
     RouteProduct,
+    RouteCustomer,
     RoutePurchaseOrder,
     RouteAdmin.Admin(),
     RouteAdmin.DevTool(),

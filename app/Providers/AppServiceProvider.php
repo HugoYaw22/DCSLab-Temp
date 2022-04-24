@@ -21,6 +21,15 @@ use App\Services\UnitService;
 use App\Services\BranchService;
 use App\Services\WarehouseService;
 use App\Services\EmployeeService;
+use App\Services\CashService;
+use App\Services\InvestorService;
+use App\Services\CapitalService;
+use App\Services\CapitalGroupService;
+use App\Services\IncomeGroupService;
+use App\Services\ExpenseGroupService;
+use App\Services\ExpenseService;
+use App\Services\CustomerGroupService;
+use App\Services\CustomerService;
 #endregion
 
 use App\Services\Impls\DashboardServiceImpl;
@@ -39,6 +48,16 @@ use App\Services\Impls\UnitServiceImpl;
 use App\Services\Impls\BranchServiceImpl;
 use App\Services\Impls\WarehouseServiceImpl;
 use App\Services\Impls\EmployeeServiceImpl;
+use App\Services\Impls\CashServiceImpl;
+use App\Services\Impls\InvestorServiceImpl;
+use App\Services\Impls\CapitalServiceImpl;
+use App\Services\Impls\CapitalGroupServiceImpl;
+use App\Services\Impls\IncomeServiceImpl;
+use App\Services\Impls\IncomeGroupServiceImpl;
+use App\Services\Impls\ExpenseGroupServiceImpl;
+use App\Services\Impls\ExpenseServiceImpl;
+use App\Services\Impls\CustomerGroupServiceImpl;
+use App\Services\Impls\CustomerServiceImpl;
 #endregion
 
 class AppServiceProvider extends ServiceProvider
@@ -110,7 +129,63 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(EmployeeService::class, function (){
             return new EmployeeServiceImpl();
         });
+
+        $this->app->singleton(CashService::class, function (){
+            return new CashServiceImpl();
+        });
+
+        $this->app->singleton(InvestorService::class, function (){
+            return new InvestorServiceImpl();
+        });
+
+        $this->app->singleton(CapitalService::class, function (){
+            return new CapitalServiceImpl();
+        });
+
+        $this->app->singleton(CapitalGroupService::class, function (){
+            return new CapitalGroupServiceImpl();
+        });
+
+        $this->app->singleton(IncomeGroupService::class, function (){
+            return new IncomeGroupServiceImpl();
+        });
+
+        $this->app->singleton(IncomeService::class, function (){
+            return new IncomeServiceImpl();
+        });
+
+        $this->app->singleton(ExpenseGroupService::class, function (){
+            return new ExpenseGroupServiceImpl();
+        });
+
+        $this->app->singleton(ExpenseService::class, function (){
+            return new ExpenseServiceImpl();
+        });
+
+        $this->app->singleton(CustomerGroupService::class, function (){
+            return new CustomerGroupServiceImpl();
+        });
+
+        $this->app->singleton(CustomerService::class, function (){
+            return new CustomerServiceImpl();
+        });
+
+        $this->app->singleton(RoleService::class, function (){
+            return new RoleServiceImpl();
+        });
+
+        $this->app->singleton(UserService::class, function (){
+            return new UserServiceImpl();
+        });
         
+        $this->app->singleton(ActivityLogService::class, function (){
+            return new ActivityLogServiceImpl();
+        });
+
+        $this->app->singleton(InboxService::class, function (){
+            return new InboxServiceImpl();
+        });
+
         #endregion
     }
 
