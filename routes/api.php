@@ -17,7 +17,17 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CapitalController;
+use App\Http\Controllers\CapitalGroupController;
+use App\Http\Controllers\CashController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerGroupController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ExpenseGroupController;
+use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\IncomeGroupController;
+use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\ProductGroupController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WarehouseController;
@@ -60,6 +70,33 @@ Route::group(['prefix' => 'get', 'middleware' => ['auth:sanctum', 'throttle:100,
             });
         });
 
+        Route::group(['prefix' => 'cash', 'as' => '.cash'], function() {
+            Route::group(['prefix' => 'cash', 'as' => '.cash'], function() {
+                Route::get('read', [CashController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'capital', 'as' => '.capital'], function() {
+                Route::get('read', [CapitalController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'capital_group', 'as' => '.capital_group'], function() {
+                Route::get('read', [CapitalGroupController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'expense', 'as' => '.expense'], function() {
+                Route::get('read', [ExpenseController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'expense_group', 'as' => '.expense_group'], function() {
+                Route::get('read', [ExpenseGroupController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'income', 'as' => '.income'], function() {
+                Route::get('read', [IncomeController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'income_group', 'as' => '.income_group'], function() {
+                Route::get('read', [IncomeGroupController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'investor', 'as' => '.investor'], function() {
+                Route::get('read', [InvestorController::class, 'read'])->name('.read');
+            });
+        });
+
         Route::group(['prefix' => 'product', 'as' => '.product'], function() {
             Route::group(['prefix' => 'brand', 'as' => '.brand'], function() {
                 Route::get('read', [BrandController::class, 'read'])->name('.read');
@@ -79,6 +116,15 @@ Route::group(['prefix' => 'get', 'middleware' => ['auth:sanctum', 'throttle:100,
 
             Route::group(['prefix' => 'common', 'as' => '.common'], function() {
                 Route::get('list/product_type', [ProductController::class, 'getProductType'])->name('.list.product_type');
+            });
+        });
+
+        Route::group(['prefix' => 'customer', 'as' => '.customer'], function() {
+            Route::group(['prefix' => 'customer', 'as' => '.customer'], function() {
+                Route::get('read', [CustomerController::class, 'read'])->name('.read');
+            });
+            Route::group(['prefix' => 'customer_group', 'as' => '.customer_group'], function() {
+                Route::get('read', [CustomerGroupController::class, 'read'])->name('.read');
             });
         });
         
@@ -159,6 +205,49 @@ Route::group(['prefix' => 'post', 'middleware' => ['auth:sanctum','throttle:50,1
                 Route::post('save', [SupplierController::class, 'store'])->name('.save');
                 Route::post('edit/{id}', [SupplierController::class, 'update'])->name('.edit');
                 Route::post('delete/{id}', [SupplierController::class, 'delete'])->name('.delete');
+            });
+        });
+
+        Route::group(['prefix' => 'cash', 'as' => '.cash'], function() {
+            Route::group(['prefix' => 'cash', 'as' => '.cash'], function() {
+                Route::post('save', [CashController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [CashController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [CashController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'capital', 'as' => '.capital'], function() {
+                Route::post('save', [CapitalController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [CapitalController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [CapitalController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'capital_group', 'as' => '.capital_group'], function() {
+                Route::post('save', [CapitalGroupController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [CapitalGroupController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [CapitalGroupController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'expense', 'as' => '.expense'], function() {
+                Route::post('save', [ExpenseController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [ExpenseController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [ExpenseController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'expense_group', 'as' => '.expense_group'], function() {
+                Route::post('save', [ExpenseGroupController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [ExpenseGroupController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [ExpenseGroupController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'income', 'as' => '.income'], function() {
+                Route::post('save', [IncomeController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [IncomeController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [IncomeController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'income_group', 'as' => '.income_group'], function() {
+                Route::post('save', [IncomeGroupController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [IncomeGroupController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [IncomeGroupController::class, 'delete'])->name('.delete');
+            });
+            Route::group(['prefix' => 'investor', 'as' => '.investor'], function() {
+                Route::post('save', [InvestorController::class, 'store'])->name('.save');
+                Route::post('edit/{id}', [InvestorController::class, 'update'])->name('.edit');
+                Route::post('delete/{id}', [InvestorController::class, 'delete'])->name('.delete');
             });
         });
 
